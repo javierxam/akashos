@@ -117,7 +117,8 @@ snap install kubectl --classic ; snap install helm --classic
 depends
 
 #Install Akash and setup wallet
-curl -sSfL https://raw.githubusercontent.com/ovrclk/akash/master/godownloader.sh | sh
+curl -sSfL https://raw.githubusercontent.com/akash-network/node/master/install.sh | sh
+
 cp bin/akash /usr/local/bin
 rm -rf bin/
 akash version
