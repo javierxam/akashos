@@ -4,8 +4,7 @@
 #Check what user has
 while true
 do
-clear
-#read -p "Do you have an Akash wallet with at least 50 AKT and the mnemonic phrase available? (y/n) : " NEW_WALLET_
+
 read -p "Do you have an Akash wallet with at least 10 AKT and the mnemonic phrase available? (y/n) " choice
 case "$choice" in
   y|Y ) NEW_WALLET_=false; break;;
@@ -18,7 +17,7 @@ done
 if [[ $NEW_WALLET_ == "false" ]]; then
 while true
 do
-clear
+
 read -p "Enter mnemonic phrase to import your provider wallet (KING SKI GOAT...) : " mnemonic_
 read -p "Are you sure the wallet mnemonic is correct? : $mnemonic_ (y/n)? " choice
 case "$choice" in
@@ -46,7 +45,7 @@ done
 #How many nodes will be in this cluster
 while true
 do
-clear
+
 read -p "How many nodes will be in this cluster? (1) : " NODES_REQUIRED_
 read -p "Are you sure the cluster size is correct? : $NODES_REQUIRED_ (y/n)? " choice
 case "$choice" in
@@ -64,7 +63,6 @@ for i in $(seq $NODES_REQUIRED_); do
 
 while true
 do
-clear
 count=$i
 if [[ $i == 1 ]]; then
 count=2
@@ -86,7 +84,7 @@ fi
 
 
 #Store securely for user
-KEY_SECRET_=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)
+KEY_SECRET_=$(qwertyuiop)
 
 #Depends / Microk8s / Kubectl / Helm
 function depends(){
@@ -104,6 +102,7 @@ DNSOverTLS=yes
 DNSStubListener=yes
 #ReadEtcHosts=yes
 EOF
+systemctl daemon-reload
 systemctl restart systemd-resolved.service
 ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
 
