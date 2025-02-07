@@ -1,20 +1,7 @@
 #!/bin/bash
 #To be run on a single microk8s node - to get the base Akash provider software installed.
 
-#Import key if the user knows it
-if [[ $NEW_WALLET_ == "false" ]]; then
-while true
-do
-
 read -p "Enter mnemonic phrase to import your provider wallet (KING SKI GOAT...) : " mnemonic_
-read -p "Are you sure the wallet mnemonic is correct? : $mnemonic_ (y/n)? " choice
-case "$choice" in
-  y|Y ) break;;
-  n|N ) echo "Try again" ; sleep 3;;
-  * ) echo "Invalid entry, please try again with Y or N" ; sleep 3;;
-esac
-done
-fi
 
 #Domain is required
 while true
