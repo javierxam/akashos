@@ -59,7 +59,7 @@ fi
 
 
 #Store securely for user
-KEY_SECRET_=qwertyuiop
+KEY_SECRET_="qwertyuiop"
 
 #Depends / Microk8s / Kubectl / Helm
 function depends(){
@@ -243,8 +243,7 @@ provider 300 IN CNAME nodes.$DOMAIN_.
 rpc 300 IN CNAME nodes.$DOMAIN_.
 EOF
   cat ./dns-records.txt
-else
-  echo "You must configure your DNS records to match this format and open the following ports"
+echo "You must configure your DNS records to match this format and open the following ports"
 cat <<EOF > ./dns-records.txt
 *.ingress 300 IN CNAME nodes.$DOMAIN_.
 nodes 300 IN A X.X.X.X. #IP of this machine and any additional nodes
