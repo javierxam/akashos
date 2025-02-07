@@ -1,18 +1,6 @@
 #!/bin/bash
 #To be run on a single microk8s node - to get the base Akash provider software installed.
 
-#Check what user has
-while true
-do
-
-read -p "Do you have an Akash wallet with at least 10 AKT and the mnemonic phrase available? (y/n) " choice
-case "$choice" in
-  y|Y ) NEW_WALLET_=false; break;;
-  n|N ) echo "New wallet required during setup" ; NEW_WALLET_=true; sleep 5 ; break;;
-  * ) echo "Invalid entry, please try again with Y or N" ; sleep 3;;
-esac
-done
-
 #Import key if the user knows it
 if [[ $NEW_WALLET_ == "false" ]]; then
 while true
