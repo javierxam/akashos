@@ -84,7 +84,7 @@ fi
 
 
 #Store securely for user
-KEY_SECRET_=$(qwertyuiop)
+KEY_SECRET_=qwertyuiop
 
 #Depends / Microk8s / Kubectl / Helm
 function depends(){
