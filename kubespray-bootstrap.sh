@@ -6,7 +6,7 @@ while true
 do
 clear
 #read -p "Do you have an Akash wallet with at least 50 AKT and the mnemonic phrase available? (y/n) : " NEW_WALLET_
-read -p "Do you have an Akash wallet with at least 50 AKT and the mnemonic phrase available? (y/n) " choice
+read -p "Do you have an Akash wallet with at least 10 AKT and the mnemonic phrase available? (y/n) " choice
 case "$choice" in
   y|Y ) NEW_WALLET_=false; break;;
   n|N ) echo "New wallet required during setup" ; NEW_WALLET_=true; sleep 5 ; break;;
@@ -144,10 +144,10 @@ fi
 
 ACCOUNT_ADDRESS_=$(echo $KEY_SECRET_ | akash keys list | grep address | cut -d ':' -f2 | cut -c 2-)
 BALANCE=$(akash query bank balances --node http://rpc.bigtractorplotting.com:26657 $ACCOUNT_ADDRESS_)
-MIN_BALANCE=50
+MIN_BALANCE=10
 
-if (( $(echo "$BALANCE < 50" | bc -l) )); then
-  echo "Balance is less than 50 AKT - you should send more coin to continue."
+if (( $(echo "$BALANCE < 10" | bc -l) )); then
+  echo "Balance is less than 10 AKT - you should send more coin to continue."
   echo "Found a balance of $BALANCE on the wallet $ACCOUNT_ADDRESS_"
 else
   echo "Found a balance of $BALANCE on the wallet $ACCOUNT_ADDRESS_"
