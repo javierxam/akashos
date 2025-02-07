@@ -145,13 +145,6 @@ ACCOUNT_ADDRESS_=$(echo $KEY_SECRET_ | akash keys list | grep address | cut -d '
 BALANCE=$(akash query bank balances --node http://rpc.bigtractorplotting.com:26657 $ACCOUNT_ADDRESS_)
 MIN_BALANCE=10
 
-if (( $(echo "$BALANCE < 10" | bc -l) )); then
-  echo "Balance is less than 10 AKT - you should send more coin to continue."
-  echo "Found a balance of $BALANCE on the wallet $ACCOUNT_ADDRESS_"
-else
-  echo "Found a balance of $BALANCE on the wallet $ACCOUNT_ADDRESS_"
-fi
-sleep 5
 
 echo "NODES_REQUIRED_=$NODES_REQUIRED_" >> variables
 echo "DOMAIN=$DOMAIN_" >> variables
@@ -201,7 +194,7 @@ then
 echo "Found good connection with correct SSH to $IP"
 else
 exit
-ssh-keygen -f "/home/andrew/.ssh/known_hosts" -R "$IP"
+ssh-keygen -f "/home/akash/.ssh/known_hosts" -R "$IP"
 ssh-keyscan $IP >> ~/.ssh/known_hosts
 sshpass -e ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@$IP
 ssh -n $USER@$IP hostnamectl set-hostname node${COUNTER} ; hostname -f
@@ -258,39 +251,16 @@ kubectl get nodes -o wide
 
 
 echo "Get latest config from github"
-wget -q https://raw.githubusercontent.com/cryptoandcoffee/akashos/main/run-helm-microk8s.sh
-wget -q https://raw.githubusercontent.com/cryptoandcoffee/akashos/main/bid-engine-script.sh
+wget -q https://raw.githubusercontent.com/javierxam/akashos/main/run-helm-microk8s.sh
+wget -q https://raw.githubusercontent.com/javierxam/akashos/main/bid-engine-script.sh
 chmod +x run-helm-microk8s.sh ; chmod +x bid-engine-script.sh
 chown akash:akash *.sh
 
 ./run-helm-microk8s.sh
  
-while true
-do
-clear
-read -p "Do you have a dynamic or static IP address? : $ip_ (dynamic/static)? " choice
-case "$choice" in
-  dynamic|DYNAMIC ) echo "You chose dynamic IP" ; ip_=dynamic ; break;;
-  static|STATIC ) echo "You chose static" ;  ip_=static ; break;;
-  * ) echo "Invalid entry, please try again with dynamic or static";;
-esac
-done 
+ 
 
-if [[ $ip_ == "dynamic" ]]; then
-echo "Dynamic IP Detected"
-  echo "You must use a Dynamic DNS / No-IP service."
-    while true
-    do
-    clear
-    read -p "Enter your dynamic DNS url (akash.no-ip.com) : " DYNAMICIP_
-    read -p "Are you sure the dynamic DNS url is correct? : $DYNAMICIP_ (y/n)? " choice
-    case "$choice" in
-      y|Y ) break;;
-      n|N ) echo "Try again" ; sleep 3;;
-      * ) echo "Invalid entry, please try again with Y or N" ; sleep 3;;
-    esac
-    done
-  echo "You must configure your DNS records to match this format and open the following ports"
+echo "You must configure your DNS records to match this format and open the following ports"
 cat <<EOF > ./dns-records.txt
 *.ingress 300 IN CNAME nodes.$DOMAIN_.
 nodes 300 IN CNAME $DYNAMICIP_.
